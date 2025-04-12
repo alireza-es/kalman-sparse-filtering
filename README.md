@@ -4,7 +4,7 @@ This project explores the use of sparsity-aware Kalman filtering for tracking dy
 
 ---
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### Step 1: Clone the Repository
 
