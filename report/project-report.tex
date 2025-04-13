@@ -123,7 +123,6 @@ where $\tau$ is a manually selected threshold parameter.
     \end{itemize}
 \end{enumerate}
 
-
 \section{Simulation Setup}
 
 To evaluate the proposed sparsity-aware Kalman filtering method, we simulate a linear dynamic system with sparse states. A custom Python notebook is used to generate the true sparse state vectors and corresponding noisy observations.
@@ -188,9 +187,58 @@ As seen in the plot, the Kalman filter can roughly follow the trajectory of acti
 
 While effective in tracking general trends, the standard Kalman filter introduces noise in zero-expected components, indicating the need for a sparsity-enforcing mechanism to suppress irrelevant fluctuations.
 
+\subsection{Sparse-Aware Kalman Filter Performance}
+To overcome the limitations of the standard Kalman filter, we implemented a sparse-aware version where a hard-thresholding step is applied after each update. This ensures that small values in the estimated state vector are suppressed, promoting sparsity.
+
+Figure~\ref{fig:sparse-kf} shows the performance of this sparse-aware Kalman filter. The dashed lines represent the true active state components, and the solid lines represent the thresholded estimates.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{sparse_kf_est_vs_true.png}
+  \caption{Sparse-Aware Kalman Filter: Estimated vs. True sparse states. Thresholding improves sparsity while retaining tracking accuracy.}
+  \label{fig:sparse-kf}
+\end{figure}
+
+From the plot, we observe the following improvements:
+\begin{itemize}
+  \item More accurate sparsity: many zero components are correctly retained as zero
+  \item Reduced noise in non-active dimensions
+  \item Competitive tracking accuracy for truly active components
+\end{itemize}
+
+This thresholding-based modification demonstrates a simple yet effective enhancement to traditional Kalman filtering when applied to sparse systems.
+
+\subsection{Quantitative MSE Analysis}
+To further compare the estimation quality, we computed the Mean Squared Error (MSE) over time for both filters.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\linewidth]{mse_comparison.png}
+  \caption{MSE comparison over time between the standard and sparse-aware Kalman filters. The sparse-aware method consistently shows lower error.}
+  \label{fig:mse-over-time}
+\end{figure}
+
+The figure above illustrates that the sparse-aware filter achieves consistently lower MSE across time steps. This confirms the visual observation that it reduces estimation error, particularly by eliminating noise in inactive state components.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\linewidth]{final_mse_bar.png}
+  \caption{Final average MSE comparison between the two Kalman filters. The sparse-aware version achieves a lower overall MSE.}
+  \label{fig:mse-final-bar}
+\end{figure}
+
+The bar chart shows the final average MSE for each filter. The sparse-aware Kalman filter outperforms the standard version, further validating the effectiveness of the thresholding technique in sparse signal estimation.
+
 \section{Conclusion}
 
-% To be written at the end of analysis.
+In this project, we explored the effectiveness of Kalman filtering for sparse signal estimation in linear dynamic systems. We began by implementing a standard Kalman filter and evaluating its performance on synthetically generated sparse state trajectories. Although the standard filter performed reasonably well, it exhibited notable shortcomings in enforcing sparsity and suppressing noise in inactive components.
+
+To address this limitation, we introduced a modified sparse-aware Kalman filter that applies a hard-thresholding step after each update. The thresholding mechanism significantly reduced estimation noise in zero-valued components while maintaining accurate tracking of active states.
+
+The improvement was supported by both qualitative visual comparisons and quantitative MSE analysis. The sparse-aware Kalman filter consistently outperformed the standard implementation, as evidenced by lower mean squared error over time and a reduced final average MSE.
+
+Overall, this study demonstrates that even a simple sparsity-inducing modification can yield meaningful improvements in state estimation performance when dealing with sparse signals. This approach can be extended further by exploring adaptive thresholding or integrating more advanced sparse signal recovery techniques within the Kalman filtering framework.
+
 
 \begin{thebibliography}{1}
 \bibitem{vaswani2008}
