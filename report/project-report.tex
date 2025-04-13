@@ -164,13 +164,15 @@ These files serve as the foundation for the following Kalman filter-based estima
 \section{Results and Discussion}
 
 \subsection{True Sparse Signal Visualization}
-
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\linewidth]{true_sparse_states.png}
   \caption{True sparse state evolution over 50 time steps. Only the active state components are shown.}
   \label{fig:sparse-true}
 \end{figure}
+The true state vector used in our simulation consists primarily of zero values, with only a few components being active at any time step. These active components follow a random walk behavior, simulating a typical sparse signal found in many real-world systems. Figure~\ref{fig:sparse-true} displays the values of the active state components over 50 time steps. As shown, only five dimensions contain non-zero values, and their trajectories vary with time while the rest remain zero. This sparse and dynamic structure makes the problem suitable for evaluating sparsity-aware estimation techniques.
+
+
 
 \subsection{Standard Kalman Filter Performance}
 Figure~\ref{fig:kf-standard} shows the comparison between the estimated states and the true sparse states for the active components. Dashed lines represent the true state values, while solid lines show the values estimated by the Kalman filter.
@@ -223,7 +225,7 @@ To further compare the estimation quality, we computed the Mean Squared Error (M
   \label{fig:mse-over-time}
 \end{figure}
 
-The figure above illustrates that the sparse-aware filter achieves consistently lower MSE across time steps. This confirms the visual observation that it reduces estimation error, particularly by eliminating noise in inactive state components.
+The Figure~\ref{fig:mse-over-time}  illustrates that the sparse-aware filter achieves consistently lower MSE across time steps. This confirms the visual observation that it reduces estimation error, particularly by eliminating noise in inactive state components.
 
 \begin{figure}[h!]
   \centering
@@ -232,8 +234,8 @@ The figure above illustrates that the sparse-aware filter achieves consistently 
   \label{fig:mse-final-bar}
 \end{figure}
 
-The bar chart shows the final average MSE for each filter. The sparse-aware Kalman filter outperforms the standard version, further validating the effectiveness of the thresholding technique in sparse signal estimation.
-
+The bar chart(Figure~\ref{fig:mse-final-bar}) shows the final average MSE for each filter. The sparse-aware Kalman filter outperforms the standard version, further validating the effectiveness of the thresholding technique in sparse signal estimation.
+\newpage
 \section{Conclusion}
 
 In this project, we explored the effectiveness of Kalman filtering for sparse signal estimation in linear dynamic systems. We began by implementing a standard Kalman filter and evaluating its performance on synthetically generated sparse state trajectories. Although the standard filter performed reasonably well, it exhibited notable shortcomings in enforcing sparsity and suppressing noise in inactive components.
